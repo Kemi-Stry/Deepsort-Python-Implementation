@@ -10,7 +10,7 @@ class VideoPlayer:
         self.frame_count = int(self.video.get(cv.CAP_PROP_FRAME_COUNT))
         self.current_frame = 0
     
-    def play(self):
+    def play(self, detector):
         while self.video.isOpened():
             #ustatwienie aktualnej klatki
             self.video.set(cv.CAP_PROP_POS_FRAMES, self.current_frame)
@@ -20,6 +20,8 @@ class VideoPlayer:
             if not ret:
                 print("Koniec video")
                 break
+
+            detector.detect(frame)
     
             #wyświetlenie klatki
             cv.imshow("Video", frame)
