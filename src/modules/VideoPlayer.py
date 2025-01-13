@@ -23,9 +23,8 @@ class VideoPlayer:
 
             boxes, indices = detector.detect(frame)
 
-            # Draw bounding boxes 
+            #rysowanie bouding boxów
             for i in indices: 
-
                 box = boxes[i] 
                 x, y, w, h = box[0], box[1], box[2], box[3] 
                 cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
