@@ -4,9 +4,7 @@ from modules.Detector import Detector
 from modules.Tracker import Tracker
 
 
-detector = Detector
+detector = Detector()
 video_player = VideoPlayer(sys.argv[1])
 
-
-print(sys.argv[1])
-video_player.play()
+video_player.play(detector)

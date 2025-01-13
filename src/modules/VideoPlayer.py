@@ -21,7 +21,14 @@ class VideoPlayer:
                 print("Koniec video")
                 break
 
-            detector.detect(frame)
+            boxes, indices = detector.detect(frame)
+
+            # Draw bounding boxes 
+            for i in indices: 
+
+                box = boxes[i] 
+                x, y, w, h = box[0], box[1], box[2], box[3] 
+                cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
     
             #wyświetlenie klatki
             cv.imshow("Video", frame)

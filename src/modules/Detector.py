@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from bounding_box import bounding_box as bb
 
 class Detector:
     def __init__(self):
@@ -19,7 +18,10 @@ class Detector:
         output_layer_name = self.netv4.getUnconnectedOutLayersNames()
         output_layers = self.netv4.forward(output_layer_name)
 
+        class_ids = []
         boxes = []
+        confidences = []
+        indices = []
 
         # Loop over the output layers
         for output in output_layers:
@@ -41,5 +43,10 @@ class Detector:
                     # Rectangle coordinates
                     x = int(center_x - w / 2)
                     y = int(center_y - h / 2)
-                    boxes.append(BoundingBox(x, y, w, h))
-        return boxes
+                    
+                    boxes.append([x, y, w, h])
+                    confidences.append(float(confidence)) 
+                    class_ids.append(class_id)
+
+        indices = cv.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)            
+        return boxes, indices
